@@ -28,18 +28,18 @@ static int __init hello_init(void)
 		pr_warn("The parameter is 0");
     } else if (howmany >= 5 && howmany <= 10) {
 		pr_warn("The parameter is in [5; 10]");
-    } else if (howmany > 10) {
-		pr_err("The parameter is > 10)");
-		return -EINVAL;
-    }
-
+	    
+	BUG_ON((howmany > 10));
+	    
     int i;
 	for (i = 0; i < howmany; i++) {
 
 		struct my_struct *ms = NULL;
 
-		ms = kmalloc(sizeof(struct my_struct), GFP_KERNEL);
-    if(howmany==8) ms=NULL;
+		if (i != howmany - 1)
+		{
+			ms = kmalloc(sizeof(struct my_struct), GFP_KERNEL);
+		}
 		ms->time = ktime_get();
 		list_add_tail(&ms->tlist, &my_list_head);
 

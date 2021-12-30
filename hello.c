@@ -24,14 +24,12 @@ static LIST_HEAD(my_list_head);
 static int __init hello_init(void)
 {
 
+     BUG_ON(howmany>10);
     if (howmany == 0) {
 		pr_warn("The parameter is 0");
     } else if (howmany >= 5 && howmany <= 10) {
 		pr_warn("The parameter is in [5; 10]");
-    } else if (howmany > 10) {
-		pr_err("The parameter is > 10)");
-		return -EINVAL;
-    }
+    
 
     int i;
 	for (i = 0; i < howmany; i++) {
